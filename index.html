@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        html { height: 100%; overflow: hidden; }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background-image: url('background1.jpg');
+        }
+        :root {
+            --leafs: url(logo.png);
+        }
+        .upper_left {
+            position: absolute;
+            top: calc(50% - 240px);
+            left: 0%;
+            background-image: var(--leafs);
+            height: 480px;
+            width: 430px;
+        }
+        .upper_right {
+            position: absolute;
+            top: calc(50% - 240px);
+            right: 0%;
+            background-image: var(--leafs);
+            height: 480px;
+            width: 430px;
+        }
+        .results {
+            text-align: center;
+            font-family: Roboto, arial, verdana, sans-serif;
+            font-size: 72pt;
+            justify-items: center;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="results">0 votes sent!</div>
+    <div class="upper_right"></div>
+    <div class="upper_left"></div>
+  </body>
+</html>
+<script>
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://www.c103.com/polls/ajaxVote/",
+        "method": "POST",
+        "headers": {
+            "accept": "*/*",
+            "content-type": "application/x-www-form-urlencoded",
+            "accept-language": "en-US,en;q=0.9",
+        },
+        "data": {
+            "poll": "27521",
+            "select": "2",
+        }
+    }
+    let i = 1;
+    setInterval(function(){
+        cycle = Math.floor(Math.random() * 50000);
+        setTimeout(function() {
+            $.ajax(settings).done(function (response) {
+                console.log("delay = " + cycle + "ms");
+                console.log(response);
+                console.log("vote number " + i);
+                document.querySelector('.results').innerHTML = i + ' votes sent!';
+                i++;
+            });
+        }, cycle);
+    }, 100000);
+
+</script>
